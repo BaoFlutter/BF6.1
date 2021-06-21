@@ -3,8 +3,11 @@ class UserInformation{
    int birthYear; 
    String address; 
    String _phoneNumber; 
+   int _bookPrice; 
 
    // public, private,. protected
+
+
 
    //UserInformation(); 
    UserInformation(String userName, int birthYear, String address)
@@ -12,7 +15,14 @@ class UserInformation{
      this.userName = userName;
      this.birthYear = birthYear;
      this.address = address;
+     
    }
+
+    int tinhGiaSach(int soLuongSach){
+      return soLuongSach* this._bookPrice * 3 ;
+    }
+
+
 
    int tinhTuoi()
    {
@@ -28,7 +38,7 @@ class UserInformation{
 
    }
 // getter 
-   String getPhoneNumber()
+    String getPhoneNumber()
    {
      return this._phoneNumber;
    }
