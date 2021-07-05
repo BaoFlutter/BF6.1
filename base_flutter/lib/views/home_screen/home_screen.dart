@@ -90,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
   storeInformation({@required String? userName, @required String? age }) async
   {
     final prefs =  await _prefs;
+    // key: value
     await prefs.setString("information", USER_NAME+ ": " + userName! +"\n" + AGE + ": " + age! );
   }
 

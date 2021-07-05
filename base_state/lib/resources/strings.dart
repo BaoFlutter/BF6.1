@@ -1,0 +1,12 @@
+const String MARK_TABLE = "Bảng điểm";
+const String MATH_MARK = "Điểm Toán";
+const String MATH_MARK_HINT = "Nhập điểm Toán";
+const String LITETURE_MARK = "Điểm Văn";
+const String LITETURE_MARK_HINT = "Nhập Điểm Văn";
+const String ENGLISH_MARK = "Điểm Tiếng Anh";
+const String ENGLSIH_MARK_HINT = "Nhập Điểm Tiếng Anh";
+const String ORDER = "Xếp loại";
+const String AVERAGE_MARK = "Điểm Trung Bình";
+const String GRADE = "Xếp loại";
+const String DETAIL_INFORMATION = "Thông tin chi tiết";
+const String NEXT_PAGE = "Chuyển trang";
