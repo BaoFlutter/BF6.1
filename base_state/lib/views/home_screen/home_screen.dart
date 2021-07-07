@@ -3,6 +3,7 @@ import 'package:base_state/resources/utils/utils.dart';
 import 'package:base_state/resources/widgets/common_widgets.dart';
 import 'package:base_state/views/detail_information/detail_information_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,6 +14,8 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController? mathTextController, litetureTextController, englishTextController;
   String averageMark = "Chưa cập nhật";
   String grade = "Chưa cập nhật";
+
+  final Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -93,6 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       grade = setGrade(double.parse(averageMark))!;
                     });
 
+                    // store information
+                    storeInformation(
+                        averageMark: averageMark,
+                        grade: grade);
 
                   }),
 
@@ -127,6 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
     if(averageMark<5) return "Học lực chưa đạt";
     if(averageMark<8.5) return "Học lực Đạt";
     if(averageMark <= 10 ) return "Học lực giỏi";
+
+  }
+
+  storeInformation({@required String? averageMark, @required String? grade}) async{
+    final prefs = await _prefs ;
+    // key : value
+    await prefs.setString("mark_infor", AVERAGE_MARK +": " + averageMark! + "\n" + GRADE + ": " + grade!);
 
   }
 
