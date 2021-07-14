@@ -1,3 +1,5 @@
+import 'package:base_state/data_sources/databases/mark_database.dart';
+import 'package:base_state/data_sources/databases/mark_model.dart';
 import 'package:base_state/resources/strings.dart';
 import 'package:base_state/resources/utils/utils.dart';
 import 'package:base_state/resources/widgets/common_widgets.dart';
@@ -16,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String grade = "Chưa cập nhật";
 
   final Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
+
+  final db = MarkDatabase();
 
   @override
   void initState() {
@@ -96,10 +100,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       grade = setGrade(double.parse(averageMark))!;
                     });
 
-                    // store information
+                    // store information on SharePreference
                     storeInformation(
                         averageMark: averageMark,
                         grade: grade);
+
+                    // Save on SQFlite
+                    MarkModel markModel = MarkModel(
+                        mark_id: null,
+                        mark_average: averageMark,
+                        grade: grade);
+                    storeOnMarkDatabase(markModel);
 
                   }),
 
@@ -123,6 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       )
     );
+  }
+
+  storeOnMarkDatabase(MarkModel markModel) async
+  {
+    await db.addWord(markModel);
   }
 
 

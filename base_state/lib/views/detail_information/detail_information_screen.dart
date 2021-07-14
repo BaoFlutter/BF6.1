@@ -1,3 +1,5 @@
+import 'package:base_state/data_sources/databases/mark_database.dart';
+import 'package:base_state/data_sources/databases/mark_model.dart';
 import 'package:base_state/resources/strings.dart';
 import 'package:base_state/resources/widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,11 +47,16 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
   final Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
   Future<String>? markInfor ;
 
+  final db = MarkDatabase();
+
+  Future<List<MarkModel>>? markList;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getMarkInformation();
+    getMarkInformationOnMarkDatabase();
   }
 
 
@@ -71,6 +78,7 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
 
        */
 
+     /*
       body: Container(
         child: FutureBuilder<String>(
           future: markInfor,
@@ -86,6 +94,31 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
 
         ),
       ),
+
+      */
+      body: Container(
+        child: FutureBuilder<List<MarkModel>>(
+          future: markList,
+          builder: (context, AsyncSnapshot<List<MarkModel>>? snapshot)
+          {
+            if((snapshot!.hasError)||(!snapshot!.hasData))
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            List<MarkModel> list = snapshot!.data!;
+            return ListView.builder(
+              itemCount: list.length,
+                itemBuilder: (context, index)
+            {
+              return informationWidgetForSQFlite(
+                  text1: list[index].mark_average,
+                  text2: list[index].grade);
+            });
+
+          },
+
+        ),
+      ),
     );
   }
 
@@ -94,6 +127,11 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
       return (prefs!.getString("mark_infor")?? "Thông tin chưa được lưu vào bộ nhớ");
     });
 
+  }
+
+  getMarkInformationOnMarkDatabase()
+  {
+    markList = db.fetchAll();
   }
 
   Widget informationWidget({@required String? text}){
@@ -106,6 +144,26 @@ class _DetailInformationScreenState extends State<DetailInformationScreen> {
           padding: EdgeInsets.all(10),
           child: Text(text!),
         )
+      ),
+    );
+  }
+
+  Widget informationWidgetForSQFlite({@required String? text1, @required String? text2 }){
+    return Container(
+      padding: EdgeInsets.all(10),
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+
+              children: [
+                Text(text1!),
+                Text(text2!)
+              ],
+            )
+          )
       ),
     );
   }

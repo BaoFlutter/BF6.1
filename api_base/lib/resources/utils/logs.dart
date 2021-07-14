@@ -9,7 +9,6 @@ class Log {
     print ("LOGGING: " + prettyprint);
   }
 
-
   void printLog(String str)
   {
     print("LOGGING: " + str);
