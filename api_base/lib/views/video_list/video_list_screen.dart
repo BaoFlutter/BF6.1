@@ -1,9 +1,13 @@
 import 'package:api_base/data_sources/api_services.dart';
+import 'package:api_base/providers/video_list/video_list_model.dart';
 import 'package:api_base/resources/strings.dart';
 import 'package:api_base/views/detail_video/detail_video_screen.dart';
+import 'package:api_base/views/moderation_widget/moderation_widget.dart';
 import 'package:api_base/views/video_list/video_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 class VideoListScreen extends StatefulWidget {
   @override
   _VideoListScreenState createState() => _VideoListScreenState();
@@ -12,14 +16,27 @@ class VideoListScreen extends StatefulWidget {
 class _VideoListScreenState extends State<VideoListScreen> {
   @override
   Widget build(BuildContext context) {
+
+    final videoListOnProvider = Provider.of<VideoListModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(VIDEO_LIST),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: (){
+                var route = MaterialPageRoute(builder: (context)=> ModerationWidget());
+                Navigator.push(context, route);
+              },
+
+              icon: Icon(Icons.description))
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.height,
+
         child: FutureBuilder<List<VideoModel>>(
           future: ApiServices().fetchVideoList(),
           builder: (context, AsyncSnapshot? snapshot){
@@ -29,6 +46,11 @@ class _VideoListScreenState extends State<VideoListScreen> {
               );
             
             List<VideoModel> videoList = snapshot!.data!;
+
+            //context.read<VideoListModel>().videoList = videoList;
+            //context.read<VideoListModel>().updateVideoList(videoList);
+            videoListOnProvider.updateVideoList(videoList);
+
             return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
@@ -60,6 +82,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
             
           },
         ),
+
+
       ),
       
     );

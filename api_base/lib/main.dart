@@ -1,6 +1,10 @@
+import 'package:api_base/data_sources/api_services.dart';
+import 'package:api_base/providers/video_list/video_list_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'views/home_screen/home_screen.dart';
+import 'views/video_list/video_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,10 +13,26 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen()
-    );
+    return MultiProvider(
+        providers:[
+          ChangeNotifierProvider(create: (context)=> VideoListModel()),
+        ],
+      child: FutureProvider<List<VideoModel>>(
+          create:(_) => ApiServices().fetchVideoList(),
+          initialData: [],
+        child:MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: HomeScreen()
+        ),
+
+      ),
+      /*
+      child:MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: HomeScreen()
+      ),
+
+       */
+     );
   }
 }
-

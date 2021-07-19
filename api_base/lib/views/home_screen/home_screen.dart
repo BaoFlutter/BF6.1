@@ -1,6 +1,7 @@
 import 'package:api_base/resources/strings.dart';
 import 'package:api_base/resources/widgets/common_widgets.dart';
 import 'package:api_base/views/video_list/video_list_screen.dart';
+import 'package:api_base/views/video_list_screen_3/video_list_screen_3.dart';
 import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,7 +17,8 @@ class HomeScreen extends StatelessWidget {
           child: customButton(
               buttonName: VIDEO_LOAD,
               onPressed: (){
-                var route = MaterialPageRoute(builder: (context)=> VideoListScreen());
+               // var route = MaterialPageRoute(builder: (context)=> VideoListScreen());
+                var route = MaterialPageRoute(builder: (context)=> VideoListScreen3());
                 Navigator.push(context, route);
 
               }),
