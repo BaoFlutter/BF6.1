@@ -22,7 +22,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
     //Provider.of<VideoListModel>(context, listen: false).getVideoList();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final videoList = Provider.of<List<VideoModel>>(context);
@@ -33,7 +32,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: (){
-            Get.back();
+            Navigator.of(context).pop();
+           // Get.back();
           },
         ),
       ),

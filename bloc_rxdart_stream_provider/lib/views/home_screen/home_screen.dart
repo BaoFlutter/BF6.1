@@ -13,43 +13,46 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final videoListBloc = VideoListBloc();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    videoListBloc.putDataToVideoListSubject();
-
   }
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    videoListBloc.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<VideoModel>>(
-        create: (_) => videoListBloc.videoListStream,
-        initialData: [],
-        child: Scaffold(
-          body: Container(
-            child: Center(
-              child: Container(
-                child: ElevatedButton(
-                  child: Text("Next Page"),
-                  onPressed: (){
-                    Get.to(VideoListScreen());
-                  },
+    return Scaffold(
+      body: Container(
+        child: Center(
+          child: Container(
+            child: ElevatedButton(
+              child: Text("Next Page"),
+              onPressed: (){
+                var route = MaterialPageRoute(builder: (context)=> VideoListScreen()) ;
+                Navigator.push(context, route);
+                //Get.to(VideoListScreen());
+              },
 
-                ),
-              ),
             ),
           ),
-        )
+        ),
+      ),
+    );
+    /*
+    return StreamProvider<List<VideoModel>>.value(
+        stream: videoListBloc.videoListStream,
+        initialData: [],
+        child:
 
 
     );
+
+     */
   }
 }
